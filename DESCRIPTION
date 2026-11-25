@@ -1,0 +1,12 @@
+Package: ggfigurestudio
+Title: Interactively Edit, Arrange, and Export ggplot Figures
+Version: 0.0.1
+Authors@R: person("Project", "Contributors", role = c("aut", "cre"), email = "maintainer@example.org")
+Description: Edit ggplot figures in a local Shiny interface. Select and style
+    plot elements, adjust labels and axes, add annotations, and customize
+    themes and palettes. Arrange multiple plots in one image, save editable
+    projects, and export figures using grid graphics.
+License: GPL-3
+Encoding: UTF-8
+Imports: ggplot2, shiny, grid, jsonlite, svglite, systemfonts, rlang, withr, RColorBrewer
+Suggests: colorspace, cowplot, DESeq2, ggpubr, ggrepel, ggthemes, metan, rrBLUP, sf, statgenSTA, SummarizedExperiment, terra, xml2
