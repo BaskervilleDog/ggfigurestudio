@@ -4,11 +4,11 @@ Edit a ggplot in a local Shiny app. Click plot elements to change their appearan
 
 ## Install from GitHub
 
-Once the repository is hosted on GitHub, run the following in R. Replace `OWNER` with the GitHub account or organization that owns the repository.
+Run the following in R.
 
 ```r
 install.packages("remotes")
-remotes::install_github("OWNER/ggfigurestudio", upgrade = "never")
+remotes::install_github("BaskervilleDog/ggfigurestudio", upgrade = "never")
 library(ggfigurestudio)
 
 fig <- edit_figure()
