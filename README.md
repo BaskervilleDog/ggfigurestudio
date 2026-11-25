@@ -2,7 +2,21 @@
 
 Edit a ggplot in a local Shiny app. Click plot elements to change their appearance, move labels and annotations by hand, and export the result at a fixed size. Save a figure project when you want to reopen the edits later.
 
-## Get started
+## Install from GitHub
+
+Once the repository is hosted on GitHub, run the following in R. Replace `OWNER` with the GitHub account or organization that owns the repository.
+
+```r
+install.packages("remotes")
+remotes::install_github("OWNER/ggfigurestudio", upgrade = "never")
+library(ggfigurestudio)
+
+fig <- edit_figure()
+```
+
+For a private repository, use a GitHub token with read access to the repository. Set it as `GITHUB_PAT` in your R environment before installing. Keep the token out of the project files. [remotes installation reference](https://remotes.r-lib.org/reference/install_github.html)
+
+## Develop from a local checkout
 
 Open `ggfigurestudio.Rproj` in RStudio. If you are setting up the project on a new computer, install its core dependencies once.
 
