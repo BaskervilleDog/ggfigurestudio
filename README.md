@@ -10,11 +10,77 @@ Run the following in R.
 install.packages("remotes")
 remotes::install_github("BaskervilleDog/ggfigurestudio", upgrade = "never")
 library(ggfigurestudio)
-
-fig <- edit_figure()
 ```
 
-For a private repository, use a GitHub token with read access to the repository. Set it as `GITHUB_PAT` in your R environment before installing. Keep the token out of the project files. [remotes installation reference](https://remotes.r-lib.org/reference/install_github.html)
+## Tutorials and examples
+
+### Edit and export your first plot
+
+Run this in RStudio to open a scatter plot in the editor.
+
+```r
+library(ggfigurestudio)
+library(ggplot2)
+
+p <- ggplot(iris, aes(Sepal.Length, Petal.Length, colour = Species)) +
+  geom_point() +
+  labs(title = "Iris measurements",
+       x = "Sepal length (cm)", y = "Petal length (cm)")
+
+fig <- edit_figure(figure_project(p, width = 180, height = 110))
+```
+
+1. Click the title. In **Selection**, change **Text**, then click **Apply display settings**.
+2. Click a point to choose its species group. In **Appearance**, change **Size** and click **Apply group style**.
+3. Click **Return edited project**. In RStudio, the result appears in **Plots** when you use its default graphics device. Run the following in the console to save the editable project and export the figure.
+
+```r
+saveRDS(fig, "iris-project.rds")
+export_figure(fig, "iris.svg")
+export_figure(fig, "iris.png", dpi = 300)
+```
+
+Reopen it later with `edit_figure(readRDS("iris-project.rds"))`.
+
+### Edit an ANOVA equation or add a regression label
+
+```r
+anova_fig <- edit_figure(gallery_example("anova_one_way"))
+```
+
+Click the equation above the treatment means. In **Selection → Content**, keep **Text format** set to **Math (plotmath)** and replace **Text** with the expression below. Click **Apply text edit**. Drag the equation to reposition it.
+
+```r
+paste("One-way ANOVA: ", Y[ij] == mu + tau[i] + epsilon[ij])
+```
+
+For a regression example, open `edit_figure(gallery_example("regression_linear"))`. Try styling the confidence band, then add a separate equation using **Layers → Add label**. Set **Centre x** to `7` and **Centre y** to `10`, choose **Math (plotmath)**, and enter `paste("Model: ", hat(y) == beta[0] + beta[1]*x)` in **Text**. Click **Apply layer change**. The **Plotmath reference** link beneath the equation hint lists more symbols and layouts.
+
+### Style stacked bars and move a count label
+
+```r
+bars <- edit_figure(gallery_example("stacked_bar"))
+```
+
+1. Click a coloured box away from its count. Choose **Selected segment** to change one box or **All segments in layer** to apply a style across the layer.
+2. Under **Figure → Label placement**, enable **Connect moved labels** and choose **Original position**.
+3. Drag a count away from its starting spot. The connector points back to the original position. Choose **Previous position** if you want the connector to start at the spot the label occupied before its latest move.
+
+### Arrange two plots in one image
+
+```r
+panel <- figure_composition(
+  list(ANOVA = gallery_example("anova_one_way"),
+       Regression = gallery_example("regression_linear")),
+  width = 280, height = 150, ncol = 2, gap = 5
+)
+combined <- edit_figure(panel)
+export_figure(combined, "experiment-figure.pdf")
+```
+
+In **Figure → Multi-plot image**, pick a plot and click **Edit selected plot**. Edit its title or equation, then switch to the other plot. Turn on **Preview combined image** to check the layout. Click **Return edited project** before running the export.
+
+For more plots, open the **Examples** tab or run `gallery_examples()` for the general gallery catalogue.
 
 ## Develop from a local checkout
 
@@ -27,21 +93,11 @@ install.packages(c(
 ))
 ```
 
-Run this from the package folder.
+Run this from the package folder, then try any of the tutorials above.
 
 ```r
 pkgload::load_all()
-library(ggplot2)
-
-p <- ggplot(iris, aes(Sepal.Length, Petal.Length, colour = Species)) +
-  geom_point() +
-  labs(title = "Iris measurements", x = "Sepal length (cm)", y = "Petal length (cm)")
-
-project <- figure_project(p, width = 180, height = 110)
-fig <- edit_figure(project)
 ```
-
-The editor opens in a browser or RStudio's **Viewer**, depending on your Shiny settings. Use the relevant **Apply** button after changing settings in the sidebar. Click **Return edited project** to finish the R call and assign the result to `fig`. With RStudio's default graphics device, the edited result appears in the **Plots** pane.
 
 The dimensions are in millimetres. Use `edit_figure(p)` for the default size of 180 × 110 mm, or `edit_figure()` to start with the built-in CO₂ example.
 
